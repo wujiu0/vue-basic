@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模拟一个数据监测</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+
+
+<script>
+
+    let dataObj = {
+        name: '尚硅谷',
+        address: '北京',
+    };
+
+    function Observer(obj) {
+        this._data = {};
+        for (const key in obj) {
+            Object.defineProperty(this, key, {
+                get: function proxyGetter() {
+                    return obj[key];
+                },
+                set: function proxySetter(newVal) {
+                    obj[key] = newVal;
+                },
+            });
+            Object.defineProperty(this._data, key, {
+                get: function reactiveGetter() {
+                    return obj[key];
+                },
+                set: function reactiveSetter(newVal) {
+                    obj[key] = newVal;
+                },
+            });
+
+        }
+    }
+
+    const vm = new Observer(dataObj);
+</script>
+</body>
+</html>
